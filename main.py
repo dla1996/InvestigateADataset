@@ -46,6 +46,10 @@ def PlotAnalysis(showData, noShowData, labels, title):
     for i in range(len(noShowData)):
         noShowAxes.annotate("{}".format(noShowData[i].size), xy=(noShowData[i].iloc[0], noShowData[i].size), xycoords="data")
 
+    if not os.path.exists('Plots'):
+        os.mkdir('Plots')
+    plt.savefig('Plots/' + title + 'Analysis.png', facecolor='white')
+
 ## Function to analyze the Appointment Data
 # @param appointmentDayData   - panda.series appointment day data
 def AnalyzeAppointmentDay(appointmentDayData):
@@ -60,6 +64,7 @@ def AnalyzeAppointmentDay(appointmentDayData):
 
     fig, (showAxes, noShowAxes) = plt.subplots(nrows = 1, ncols = 2, figsize=(10, 8))
 
+    fig.suptitle('AppointmentDay')
     matplotlib.pyplot.subplots_adjust(wspace = 0.8)
 
     show_weeknoSeries = pd.Series(weeknumber[showSeries])
@@ -91,7 +96,7 @@ def AnalyzeAppointmentDay(appointmentDayData):
         shadow=True, startangle=90, radius=10.0)
     noShowAxes.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    plt.show()
+    plt.savefig('Plots/AppointmentDayAnalysis.png', facecolor='white')
 
 ## Function to analyze the Hypertension data
 # @param hypertensionData   - panda.series hypertension data
