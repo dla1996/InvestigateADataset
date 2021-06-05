@@ -25,26 +25,32 @@ def PlotAnalysis(showData, noShowData, labels, title):
         
     # 2 Axes for show/noShow
     fig, (showAxes, noShowAxes) = plt.subplots(nrows = 1, ncols = 2)
+    figureSize = (12,8)
 
     fig.suptitle(title)
 
     showAxes.set_title('Show')
 
-    for i in range(len(showData)):
-        showData[i].plot(ax=showAxes, kind='hist', label=labels[i], legend=True, figsize=(10,8))
+    showTotal = 0
+    noShowTotal = 0
 
-    # Label the bars with the frequency of that value
     for i in range(len(showData)):
-        showAxes.annotate("{}".format(showData[i].size), xy=(showData[i].iloc[0], showData[i].size), xycoords="data")
+        showData[i].plot(ax=showAxes, kind='hist', label=labels[i], legend=True, figsize=figureSize)
+        showTotal = showTotal + showData[i].size
+
+    # Label the bars with the frequency of that value as well as percentage
+    for i in range(len(showData)):
+        showAxes.annotate("{}({:.3f}%)".format(showData[i].size, (showData[i].size / showTotal) * 100.0), xy=(showData[i].iloc[0], showData[i].size), xycoords="data")
 
     noShowAxes.set_title('NoShow')
 
     for i in range(len(noShowData)):
-        noShowData[i].plot(ax=noShowAxes, kind='hist', label=labels[i], legend=True, figsize=(10,8))
+        noShowData[i].plot(ax=noShowAxes, kind='hist', label=labels[i], legend=True, figsize=figureSize)
+        noShowTotal = noShowTotal + noShowData[i].size
 
-    # Label the bars with the frequency of that value
+    # Label the bars with the frequency of that value as well as percentage
     for i in range(len(noShowData)):
-        noShowAxes.annotate("{}".format(noShowData[i].size), xy=(noShowData[i].iloc[0], noShowData[i].size), xycoords="data")
+        noShowAxes.annotate("{}({:.3f}%)".format(noShowData[i].size, (noShowData[i].size / noShowTotal) * 100.0), xy=(noShowData[i].iloc[0], noShowData[i].size), xycoords="data")
 
     if not os.path.exists('Plots'):
         os.mkdir('Plots')
