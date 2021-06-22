@@ -219,6 +219,11 @@ def AnalyzeSMSReceive(smsData):
             title='SMS'
     )
 
+def Dimension1Analysis(df, xCol, color):
+    plt.figure(figsize = (12,8))
+    sns.countplot(data=df, x=xCol, color=color)
+    plt.savefig('Plots/' + xCol + '1DAnalysis.png', facecolor='white')
+
 def main():
     global showSeries, noShowSeries
     csvFile = os.path.join(cwd, "noshowappointments-kagglev2-may-2016.csv")
@@ -237,11 +242,16 @@ def main():
     df['AppointmentDay'] = pd.to_datetime(df['AppointmentDay'])
 
     # Analyze data now
+    Dimension1Analysis(df, "Alcoholism", "steelblue")
     AnalyzeAlcoholism(df.Alcoholism)
     AnalyzeAppointmentDay(df.AppointmentDay)
+    Dimension1Analysis(df, "Diabetes", "steelblue")
     AnalyzeDiabetes(df.Diabetes)
+    Dimension1Analysis(df, "Handicap", "steelblue")
     AnalyzeHandicap(df.Handicap)
+    Dimension1Analysis(df, "Hypertension", "steelblue")
     AnalyzeHyperTension(df.Hypertension)
+    Dimension1Analysis(df, "SMS_received", "steelblue")
     AnalyzeSMSReceive(df.SMS_received)
     
 
