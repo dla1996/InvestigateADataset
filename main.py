@@ -221,7 +221,14 @@ def AnalyzeSMSReceive(smsData):
 
 def Dimension1Analysis(df, xCol, color):
     plt.figure(figsize = (12,8))
+    plt.suptitle("{} Count".format(xCol))
     sns.countplot(data=df, x=xCol, color=color)
+    numVals = df[xCol].size
+    value_counts = df[xCol].value_counts()
+    print("Count \n\r {}".format(value_counts))
+    for i in range(value_counts.size):
+        plt.annotate("{}({:.3f}%)".format(value_counts[i], (value_counts[i] / numVals) * 100.0), xy=(i, value_counts[i]), xycoords="data")
+        
     plt.savefig('Plots/' + xCol + '1DAnalysis.png', facecolor='white')
 
 def main():
